@@ -1,3 +1,4 @@
+[![Java CI with Maven](https://github.com/deepaksorthiya/spring-boot-3-security-with-permission-evaluator/actions/workflows/maven.yml/badge.svg)](https://github.com/deepaksorthiya/spring-boot-3-security-with-permission-evaluator/actions/workflows/maven.yml)
 # spring-boot-3-security-with-permission-evaluator
 
 Clone this repository:
@@ -14,7 +15,7 @@ mvnw spring-boot:run
 ### Users for Testing
 ```
 USER1 ==> Username: user Password: password <br>
-USER2 ==> Username: admin Password : password
+USER2 ==> Username: admin Password : admin
 ```
 
 ### Rest API
