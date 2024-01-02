@@ -14,10 +14,6 @@ public class CustomSecurityExpressionRoot extends SecurityExpressionRoot impleme
 
     private Object target;
 
-    public CustomSecurityExpressionRoot(Authentication a) {
-        super(a);
-    }
-
     public CustomSecurityExpressionRoot(Supplier<Authentication> authentication) {
         super(authentication);
     }

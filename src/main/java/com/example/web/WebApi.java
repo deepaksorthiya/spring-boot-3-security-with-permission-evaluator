@@ -22,7 +22,7 @@ public class WebApi {
     }
 
     @GetMapping("/hasPermission")
-    @PreAuthorize("hasPermission('hasAccess','READ')")
+    @PreAuthorize("hasPermission('hasAccess','WRITE')")
     public User getOAuth2AccessToken(@AuthenticationPrincipal User user) {
         return user;
     }

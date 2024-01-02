@@ -6,10 +6,9 @@ import org.springframework.aop.support.AopUtils;
 import org.springframework.context.expression.MethodBasedEvaluationContext;
 import org.springframework.core.ParameterNameDiscoverer;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionOperations;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.parameters.DefaultSecurityParameterNameDiscoverer;
 
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 public class CustomMethodSecurityEvaluationContext extends MethodBasedEvaluationContext {
 
@@ -18,14 +17,6 @@ public class CustomMethodSecurityEvaluationContext extends MethodBasedEvaluation
      * for each instance. Use the constructor which takes the resolver, as an argument
      * thus allowing for caching.
      */
-    public CustomMethodSecurityEvaluationContext(Authentication user, MethodInvocation mi) {
-        this(user, mi, new DefaultSecurityParameterNameDiscoverer());
-    }
-
-    public CustomMethodSecurityEvaluationContext(Authentication user, MethodInvocation mi,
-                                                 ParameterNameDiscoverer parameterNameDiscoverer) {
-        super(mi.getThis(), getSpecificMethod(mi), mi.getArguments(), parameterNameDiscoverer);
-    }
 
     public CustomMethodSecurityEvaluationContext(MethodSecurityExpressionOperations root, MethodInvocation mi,
                                                  ParameterNameDiscoverer parameterNameDiscoverer) {
@@ -33,7 +24,7 @@ public class CustomMethodSecurityEvaluationContext extends MethodBasedEvaluation
     }
 
     private static Method getSpecificMethod(MethodInvocation mi) {
-        return AopUtils.getMostSpecificMethod(mi.getMethod(), AopProxyUtils.ultimateTargetClass(mi.getThis()));
+        return AopUtils.getMostSpecificMethod(mi.getMethod(), AopProxyUtils.ultimateTargetClass(Objects.requireNonNull(mi.getThis())));
     }
 
 }
