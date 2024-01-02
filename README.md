@@ -14,7 +14,7 @@ mvnw spring-boot:run
 ### Users for Testing
 ```
 USER1 ==> Username: user Password: password <br>
-USER2 ==> Username: admin Password : password
+USER2 ==> Username: admin Password : admin
 ```
 
 ### Rest API
