@@ -1,5 +1,4 @@
-![example workflow](https://github.com/deepaksorthiya/spring-boot-3-security-with-permission-evaluator/.github/workflows/maven.yml/badge.svg)
-
+[![Java CI with Maven](https://github.com/deepaksorthiya/spring-boot-3-security-with-permission-evaluator/actions/workflows/maven.yml/badge.svg)](https://github.com/deepaksorthiya/spring-boot-3-security-with-permission-evaluator/actions/workflows/maven.yml)
 # spring-boot-3-security-with-permission-evaluator
 
 Clone this repository:
