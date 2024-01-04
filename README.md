@@ -1,3 +1,5 @@
+![example workflow](https://github.com/deepaksorthiya/spring-boot-3-security-with-permission-evaluator/.github/workflows/maven.yml/badge.svg)
+
 # spring-boot-3-security-with-permission-evaluator
 
 Clone this repository:
