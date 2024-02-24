@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-boot-3-security-with-permission-evaluator
+  labels:
+    app: spring-boot-3-security-with-permission-evaluator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-boot-3-security-with-permission-evaluator
+  template:
+    metadata:
+      name: spring-boot-3-security-with-permission-evaluator
+      labels:
+        app: spring-boot-3-security-with-permission-evaluator
+    spec:
+      containers:
+        - name: spring-boot-3-security-with-permission-evaluator
+          image: deepaksorthiya/spring-boot-3-security-with-permission-evaluator:0.0.1-SNAPSHOT
+          imagePullPolicy: Never
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-boot-3-security-with-permission-evaluator
+spec:
+  type: LoadBalancer
+  selector:
+    app: spring-boot-3-security-with-permission-evaluator
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
