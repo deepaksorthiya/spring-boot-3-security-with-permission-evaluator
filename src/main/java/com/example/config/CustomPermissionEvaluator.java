@@ -8,13 +8,18 @@ import org.springframework.security.core.Authentication;
 
 import java.io.Serializable;
 
+/**
+ * Custom {@link PermissionEvaluator} implementation
+ *
+ * @author Deepak Katariya
+ */
 public class CustomPermissionEvaluator implements PermissionEvaluator {
 
     private final Log logger = LogFactory.getLog(this.getClass());
 
     @Override
     public boolean hasPermission(Authentication authentication, Object accessType, Object permission) {
-        this.logger.debug(LogMessage.of(() -> "Authorizing " + authentication.getName())+" with "+  accessType.toString()+"  " +permission.toString());
+        this.logger.debug(LogMessage.of(() -> "Authorizing " + authentication.getName()) + " with " + accessType.toString() + "  " + permission.toString());
         if (authentication != null && accessType instanceof String) {
             if ("hasAccess".equalsIgnoreCase(String.valueOf(accessType))) {
                 boolean hasAccess = validateAccess(String.valueOf(permission));
