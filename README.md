@@ -2,7 +2,7 @@
 # Getting Started
 ## Requirements:
 ```
-Spring Boot: 3.2.4
+Spring Boot: 3.2.5
 Java: 17
 Maven: 3.9+
 ```
