@@ -1,6 +1,6 @@
 package com.example.web;
-import org.junit.jupiter.api.Test;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -91,6 +91,22 @@ class WebApiTest {
     public void accessSecuredResourceWithAdminAuthenticationThenOk() throws Exception {
         mockMvc.perform(get("/authentication"))
                 .andExpect(status().isOk())
+                .andReturn();
+    }
+
+    @Test
+    @WithMockUser(username = "admin", password = "admin", authorities = {"ROLE_ADMIN", "ROLE_USER"})
+    public void accessSecuredResourceWithAdminAuthenticationApiPreAuthWithMethodObjectArgsHasPermissionOfWriteThenOk() throws Exception {
+        mockMvc.perform(get("/preAuthWithMethodObjectArgsHasPermissionOfWrite"))
+                .andExpect(status().isForbidden())
+                .andReturn();
+    }
+
+    @Test
+    @WithMockUser(username = "admin", password = "admin", authorities = {"ROLE_ADMIN", "ROLE_USER"})
+    public void accessSecuredResourceWithAdminAuthenticationApiPostAuthWithMethodObjectArgsHasPermissionOfWriteThenOk() throws Exception {
+        mockMvc.perform(get("/postAuthWithMethodReturnObjectArgsHasPermissionOfWrite"))
+                .andExpect(status().isForbidden())
                 .andReturn();
     }
 }

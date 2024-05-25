@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,24 +24,24 @@ public class WebApi {
 
     private final Logger logger = LoggerFactory.getLogger(WebApi.class);
 
-    @GetMapping("/user")
-    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
-    public ResponseEntity<User> userAccess(@AuthenticationPrincipal User user) {
-        logger.info("You have USER level access USER :: {} ", user);
-        return ResponseEntity.ok(user);
-    }
-
-    @GetMapping("/admin")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    public ResponseEntity<User> adminAccess(@AuthenticationPrincipal User user) {
-        logger.info("You have ADMIN level access USER ::{} ", user);
-        return ResponseEntity.ok(user);
-    }
-
     @GetMapping("/hasPermission")
     @PreAuthorize("hasPermission('hasAccess','WRITE')")
     public ResponseEntity<User> hasPermissionOfWrite(@AuthenticationPrincipal User user) {
         logger.info("Checking hasPermission('hasAccess','WRITE') :: {} ", user);
+        return ResponseEntity.ok(user);
+    }
+
+    @GetMapping("/preAuthWithMethodObjectArgsHasPermissionOfWrite")
+    @PreAuthorize("hasPermission(#user,'WRITE')")
+    public ResponseEntity<User> preAuthWithMethodObjectArgsHasPermissionOfWrite(@AuthenticationPrincipal User user) {
+        logger.info("Checking preAuthWithMethodObjectArgsHasPermissionOfWrite('hasAccess','WRITE') :: {} ", user);
+        return ResponseEntity.ok(user);
+    }
+
+    @GetMapping("/postAuthWithMethodReturnObjectArgsHasPermissionOfWrite")
+    @PostAuthorize("hasPermission(returnObject.body ,'ProductOwner','READ')")
+    public ResponseEntity<User> postAuthWithMethodReturnObjectArgsHasPermissionOfWrite(@AuthenticationPrincipal User user) {
+        logger.info("Checking postAuthWithMethodReturnObjectArgsHasPermissionOfWrite('hasAccess','WRITE') :: {} ", user);
         return ResponseEntity.ok(user);
     }
 
@@ -54,6 +55,20 @@ public class WebApi {
     public Authentication authentication(Authentication authentication) {
         logger.info("Authentication Object :: {} ", authentication);
         return authentication;
+    }
+
+    @GetMapping("/user")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
+    public ResponseEntity<User> userAccess(@AuthenticationPrincipal User user) {
+        logger.info("You have USER level access USER :: {} ", user);
+        return ResponseEntity.ok(user);
+    }
+
+    @GetMapping("/admin")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    public ResponseEntity<User> adminAccess(@AuthenticationPrincipal User user) {
+        logger.info("You have ADMIN level access USER ::{} ", user);
+        return ResponseEntity.ok(user);
     }
 
     @GetMapping(value = "/server-info", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -2,7 +2,7 @@
 # Getting Started
 ## Requirements:
 ```
-Spring Boot: 3.2.5
+Spring Boot: 3.3.0
 Java: 17
 Maven: 3.9+
 ```
@@ -34,5 +34,7 @@ USER2 ==> Username: admin Password : admin
 http://localhost:8080/user <br>
 http://localhost:8080/admin <br>
 http://localhost:8080/hasPermission <br>
+http://localhost:8080/preAuthWithMethodObjectArgsHasPermissionOfWrite <br>
+http://localhost:8080/postAuthWithMethodReturnObjectArgsHasPermissionOfWrite <br>
 http://localhost:8080/principal <br>
 http://localhost:8080/authentication
