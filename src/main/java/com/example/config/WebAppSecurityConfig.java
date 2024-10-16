@@ -32,7 +32,9 @@ public class WebAppSecurityConfig {
         http
                 .formLogin(Customizer.withDefaults())
                 .authorizeHttpRequests((authorizeHttpRequests) ->
-                        authorizeHttpRequests.anyRequest().authenticated())
+                        authorizeHttpRequests
+                                .requestMatchers("/server-info").permitAll()
+                                .anyRequest().authenticated())
                 .anonymous(anonymous -> anonymous.disable())
         ;
 
