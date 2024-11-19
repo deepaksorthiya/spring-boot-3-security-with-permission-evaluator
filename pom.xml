@@ -67,7 +67,11 @@
                         <name>deepaksorthiya/${project.artifactId}:${project.version}</name>
                         <publish>false</publish>
                         <createdDate>${maven.build.timestamp}</createdDate>
+                        <builder>bellsoft/buildpacks.builder:musl</builder>
                     </image>
+                    <layers>
+                        <enabled>true</enabled>
+                    </layers>
                 </configuration>
             </plugin>
         </plugins>
