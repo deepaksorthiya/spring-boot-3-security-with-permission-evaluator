@@ -22,52 +22,52 @@ import java.util.Map;
 @RestController
 public class WebApi {
 
-    private final Logger logger = LoggerFactory.getLogger(WebApi.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebApi.class);
 
     @GetMapping("/hasPermission")
     @PreAuthorize("hasPermission('hasAccess','WRITE')")
     public ResponseEntity<User> hasPermissionOfWrite(@AuthenticationPrincipal User user) {
-        logger.info("Checking hasPermission('hasAccess','WRITE') :: {} ", user);
+        LOGGER.info("Checking hasPermission('hasAccess','WRITE') :: {} ", user);
         return ResponseEntity.ok(user);
     }
 
     @GetMapping("/preAuthWithMethodObjectArgsHasPermissionOfWrite")
     @PreAuthorize("hasPermission(#user,'WRITE')")
     public ResponseEntity<User> preAuthWithMethodObjectArgsHasPermissionOfWrite(@AuthenticationPrincipal User user) {
-        logger.info("Checking preAuthWithMethodObjectArgsHasPermissionOfWrite('hasAccess','WRITE') :: {} ", user);
+        LOGGER.info("Checking preAuthWithMethodObjectArgsHasPermissionOfWrite('hasAccess','WRITE') :: {} ", user);
         return ResponseEntity.ok(user);
     }
 
     @GetMapping("/postAuthWithMethodReturnObjectArgsHasPermissionOfWrite")
     @PostAuthorize("hasPermission(returnObject.body ,'ProductOwner','READ')")
     public ResponseEntity<User> postAuthWithMethodReturnObjectArgsHasPermissionOfWrite(@AuthenticationPrincipal User user) {
-        logger.info("Checking postAuthWithMethodReturnObjectArgsHasPermissionOfWrite('hasAccess','WRITE') :: {} ", user);
+        LOGGER.info("Checking postAuthWithMethodReturnObjectArgsHasPermissionOfWrite('hasAccess','WRITE') :: {} ", user);
         return ResponseEntity.ok(user);
     }
 
     @GetMapping("/principal")
     public Principal principal(Principal principal) {
-        logger.info("Principal Object :: {} ", principal);
+        LOGGER.info("Principal Object :: {} ", principal);
         return principal;
     }
 
     @GetMapping("/authentication")
     public Authentication authentication(Authentication authentication) {
-        logger.info("Authentication Object :: {} ", authentication);
+        LOGGER.info("Authentication Object :: {} ", authentication);
         return authentication;
     }
 
     @GetMapping("/user")
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     public ResponseEntity<User> userAccess(@AuthenticationPrincipal User user) {
-        logger.info("You have USER level access USER :: {} ", user);
+        LOGGER.info("You have USER level access USER :: {} ", user);
         return ResponseEntity.ok(user);
     }
 
     @GetMapping("/admin")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     public ResponseEntity<User> adminAccess(@AuthenticationPrincipal User user) {
-        logger.info("You have ADMIN level access USER ::{} ", user);
+        LOGGER.info("You have ADMIN level access USER ::{} ", user);
         return ResponseEntity.ok(user);
     }
 
@@ -83,7 +83,7 @@ public class WebApi {
         } catch (UnknownHostException e) {
             throw new RuntimeException(e);
         }
-        logger.info("request headers :: {}", httpHeaders);
+        LOGGER.info("request headers :: {}", httpHeaders);
         return httpHeaders;
     }
 }

@@ -1,7 +1,7 @@
 package com.example.config;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.log.LogMessage;
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
@@ -15,11 +15,11 @@ import java.io.Serializable;
  */
 public class CustomPermissionEvaluator implements PermissionEvaluator {
 
-    private final Log logger = LogFactory.getLog(this.getClass());
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomPermissionEvaluator.class);
 
     @Override
     public boolean hasPermission(Authentication authentication, Object accessType, Object permission) {
-        this.logger.debug(LogMessage.of(() -> "Authorizing " + authentication.getName()) + " with " + accessType.toString() + "  " + permission.toString());
+        LOGGER.debug("{} with {}  {}", LogMessage.of(() -> "Authorizing " + authentication.getName()), accessType.toString(), permission.toString());
         if (authentication != null && accessType instanceof String) {
             if ("hasAccess".equalsIgnoreCase(String.valueOf(accessType))) {
                 boolean hasAccess = validateAccess(String.valueOf(permission));
@@ -41,6 +41,7 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
     @Override
     public boolean hasPermission(Authentication authentication, Serializable serializable, String targetType,
                                  Object permission) {
+        LOGGER.debug("Authorizing user {} with  {}, {}, {}", authentication.getName(), serializable, targetType, permission);
         return false;
     }
 
