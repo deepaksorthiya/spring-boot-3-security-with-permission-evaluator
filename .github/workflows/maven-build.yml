@@ -18,7 +18,6 @@ on:
       - 'images/**'
       - 'k8s/**'
       - 'docker-compose.yml'
-      - 'Dockerfile'
       - 'docker/**'
       - '.gitattributes'
   pull_request:
