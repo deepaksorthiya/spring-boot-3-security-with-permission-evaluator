@@ -1,5 +1,7 @@
 [![Java Maven Build Test](https://github.com/deepaksorthiya/spring-boot-3-security-with-permission-evaluator/actions/workflows/maven-build.yml/badge.svg)](https://github.com/deepaksorthiya/spring-boot-3-security-with-permission-evaluator/actions/workflows/maven-build.yml)
 
+## spring method based security example with custom ```PermissionEvaluator```
+
 # Getting Started
 
 ## Requirements:
@@ -9,7 +11,7 @@ Git: 2.47.1
 Spring Boot: 3.4.1
 Java: 17
 Maven: 3.9+
-Docker Desktop: Tested on 4.36.0
+Docker Desktop(Optional): Tested on 4.36.0
 ```
 
 ### Clone this repository:
@@ -54,6 +56,7 @@ http://localhost:8080/admin <br>
 http://localhost:8080/hasPermission <br>
 http://localhost:8080/preAuthWithMethodObjectArgsHasPermissionOfWrite <br>
 http://localhost:8080/postAuthWithMethodReturnObjectArgsHasPermissionOfWrite <br>
+http://localhost:8080/payment <br>
 http://localhost:8080/principal <br>
 http://localhost:8080/authentication
 

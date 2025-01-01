@@ -45,6 +45,13 @@ public class WebApi {
         return ResponseEntity.ok(user);
     }
 
+    @GetMapping("/payment")
+    @PreAuthorize("hasPermission('Payments', 'Domestic Payments', {'create'})")
+    public ResponseEntity<User> payment(@AuthenticationPrincipal User user) {
+        LOGGER.info("Checking payment('Payments', 'Domestic Payments', {'create'}) :: {} ", user);
+        return ResponseEntity.ok(user);
+    }
+
     @GetMapping("/principal")
     public Principal principal(Principal principal) {
         LOGGER.info("Principal Object :: {} ", principal);

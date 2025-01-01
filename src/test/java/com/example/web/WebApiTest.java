@@ -109,4 +109,12 @@ class WebApiTest {
                 .andExpect(status().isForbidden())
                 .andReturn();
     }
+
+    @Test
+    @WithMockUser(username = "admin", password = "admin", authorities = {"ROLE_ADMIN", "ROLE_USER"})
+    public void accessSecuredResourcePaymentThenForbidden() throws Exception {
+        mockMvc.perform(get("/payment"))
+                .andExpect(status().isForbidden())
+                .andReturn();
+    }
 }
