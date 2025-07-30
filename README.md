@@ -7,11 +7,11 @@
 ## Requirements:
 
 ```
-Git: 2.47.1
-Spring Boot: 3.4.4
-Java: 17
+Git: 2.50.0
+Spring Boot: 3.5.0
+Java: 24
 Maven: 3.9+
-Docker Desktop(Optional): Tested on 4.36.0
+Docker Desktop(Optional): Tested on 4.43.0
 ```
 
 ### Clone this repository:

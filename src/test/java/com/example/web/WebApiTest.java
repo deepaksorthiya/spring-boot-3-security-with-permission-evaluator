@@ -20,101 +20,87 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 class WebApiTest {
-    @Autowired
-    private MockMvc mockMvc;
 
-    @Test
-    public void loginWithValidUserThenAuthenticated() throws Exception {
-        FormLoginRequestBuilder login = formLogin()
-                .user("user")
-                .password("password");
+	@Autowired
+	private MockMvc mockMvc;
 
-        mockMvc.perform(login)
-                .andExpect(authenticated().withUsername("user"));
-    }
+	@Test
+	public void loginWithValidUserThenAuthenticated() throws Exception {
+		FormLoginRequestBuilder login = formLogin().user("user").password("password");
 
-    @Test
-    public void loginWithInvalidUserThenUnauthenticated() throws Exception {
-        FormLoginRequestBuilder login = formLogin()
-                .user("invalid")
-                .password("invalidpassword");
+		mockMvc.perform(login).andExpect(authenticated().withUsername("user"));
+	}
 
-        mockMvc.perform(login)
-                .andExpect(unauthenticated());
-    }
+	@Test
+	public void loginWithInvalidUserThenUnauthenticated() throws Exception {
+		FormLoginRequestBuilder login = formLogin().user("invalid").password("invalidpassword");
 
-    @Test
-    public void accessSecuredResourceUnauthenticatedThenRedirectsToLogin() throws Exception {
-        mockMvc.perform(get("/user"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrlPattern("**/login"));
-    }
+		mockMvc.perform(login).andExpect(unauthenticated());
+	}
 
-    @Test
-    @WithMockUser
-    public void accessSecuredResourceAuthenticatedThenOk() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(get("/user"))
-                .andExpect(status().isOk())
-                .andReturn();
+	@Test
+	public void accessSecuredResourceUnauthenticatedThenRedirectsToLogin() throws Exception {
+		mockMvc.perform(get("/user"))
+			.andExpect(status().is3xxRedirection())
+			.andExpect(redirectedUrlPattern("**/login"));
+	}
 
-        assertThat(mvcResult.getResponse().getContentAsString()).contains("user");
-    }
+	@Test
+	@WithMockUser
+	public void accessSecuredResourceAuthenticatedThenOk() throws Exception {
+		MvcResult mvcResult = mockMvc.perform(get("/user")).andExpect(status().isOk()).andReturn();
 
-    @Test
-    @WithMockUser(username = "admin", password = "admin", authorities = {"ROLE_ADMIN", "ROLE_ADMIN"})
-    public void accessSecuredResourceWithAdminThenOk() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(get("/admin"))
-                .andExpect(status().isOk())
-                .andReturn();
+		assertThat(mvcResult.getResponse().getContentAsString()).contains("user");
+	}
 
-        assertThat(mvcResult.getResponse().getContentAsString()).contains("admin");
-    }
+	@Test
+	@WithMockUser(username = "admin", password = "admin", authorities = { "ROLE_ADMIN", "ROLE_ADMIN" })
+	public void accessSecuredResourceWithAdminThenOk() throws Exception {
+		MvcResult mvcResult = mockMvc.perform(get("/admin")).andExpect(status().isOk()).andReturn();
 
-    @Test
-    @WithMockUser(username = "admin", password = "admin", authorities = {"ROLE_ADMIN", "ROLE_USER"})
-    public void accessSecuredResourceWithAdminHasPermissionThenOk() throws Exception {
-        mockMvc.perform(get("/hasPermission"))
-                .andExpect(status().isForbidden())
-                .andReturn();
-    }
+		assertThat(mvcResult.getResponse().getContentAsString()).contains("admin");
+	}
 
-    @Test
-    @WithMockUser(username = "admin", password = "admin", authorities = {"ROLE_ADMIN", "ROLE_USER"})
-    public void accessSecuredResourceWithAdminPrincipalThenOk() throws Exception {
-        mockMvc.perform(get("/principal"))
-                .andExpect(status().isOk())
-                .andReturn();
-    }
+	@Test
+	@WithMockUser(username = "admin", password = "admin", authorities = { "ROLE_ADMIN", "ROLE_USER" })
+	public void accessSecuredResourceWithAdminHasPermissionThenOk() throws Exception {
+		mockMvc.perform(get("/hasPermission")).andExpect(status().isForbidden()).andReturn();
+	}
 
-    @Test
-    @WithMockUser(username = "admin", password = "admin", authorities = {"ROLE_ADMIN", "ROLE_USER"})
-    public void accessSecuredResourceWithAdminAuthenticationThenOk() throws Exception {
-        mockMvc.perform(get("/authentication"))
-                .andExpect(status().isOk())
-                .andReturn();
-    }
+	@Test
+	@WithMockUser(username = "admin", password = "admin", authorities = { "ROLE_ADMIN", "ROLE_USER" })
+	public void accessSecuredResourceWithAdminPrincipalThenOk() throws Exception {
+		mockMvc.perform(get("/principal")).andExpect(status().isOk()).andReturn();
+	}
 
-    @Test
-    @WithMockUser(username = "admin", password = "admin", authorities = {"ROLE_ADMIN", "ROLE_USER"})
-    public void accessSecuredResourceWithAdminAuthenticationApiPreAuthWithMethodObjectArgsHasPermissionOfWriteThenOk() throws Exception {
-        mockMvc.perform(get("/preAuthWithMethodObjectArgsHasPermissionOfWrite"))
-                .andExpect(status().isForbidden())
-                .andReturn();
-    }
+	@Test
+	@WithMockUser(username = "admin", password = "admin", authorities = { "ROLE_ADMIN", "ROLE_USER" })
+	public void accessSecuredResourceWithAdminAuthenticationThenOk() throws Exception {
+		mockMvc.perform(get("/authentication")).andExpect(status().isOk()).andReturn();
+	}
 
-    @Test
-    @WithMockUser(username = "admin", password = "admin", authorities = {"ROLE_ADMIN", "ROLE_USER"})
-    public void accessSecuredResourceWithAdminAuthenticationApiPostAuthWithMethodObjectArgsHasPermissionOfWriteThenOk() throws Exception {
-        mockMvc.perform(get("/postAuthWithMethodReturnObjectArgsHasPermissionOfWrite"))
-                .andExpect(status().isForbidden())
-                .andReturn();
-    }
+	@Test
+	@WithMockUser(username = "admin", password = "admin", authorities = { "ROLE_ADMIN", "ROLE_USER" })
+	public void accessSecuredResourceWithAdminAuthenticationApiPreAuthWithMethodObjectArgsHasPermissionOfWriteThenOk()
+			throws Exception {
+		mockMvc.perform(get("/preAuthWithMethodObjectArgsHasPermissionOfWrite"))
+			.andExpect(status().isForbidden())
+			.andReturn();
+	}
 
-    @Test
-    @WithMockUser(username = "admin", password = "admin", authorities = {"ROLE_ADMIN", "ROLE_USER"})
-    public void accessSecuredResourcePaymentThenForbidden() throws Exception {
-        mockMvc.perform(get("/payment"))
-                .andExpect(status().isForbidden())
-                .andReturn();
-    }
+	@Test
+	@WithMockUser(username = "admin", password = "admin", authorities = { "ROLE_ADMIN", "ROLE_USER" })
+	public void accessSecuredResourceWithAdminAuthenticationApiPostAuthWithMethodObjectArgsHasPermissionOfWriteThenOk()
+			throws Exception {
+		mockMvc.perform(get("/postAuthWithMethodReturnObjectArgsHasPermissionOfWrite"))
+			.andExpect(status().isForbidden())
+			.andReturn();
+	}
+
+	@Test
+	@WithMockUser(username = "admin", password = "admin", authorities = { "ROLE_ADMIN", "ROLE_USER" })
+	public void accessSecuredResourcePaymentThenForbidden() throws Exception {
+		mockMvc.perform(get("/payment")).andExpect(status().isForbidden()).andReturn();
+	}
+
 }

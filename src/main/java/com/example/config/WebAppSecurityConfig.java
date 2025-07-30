@@ -19,52 +19,52 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableWebSecurity(/*debug = true*/)
+@EnableWebSecurity(/* debug = true */)
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 public class WebAppSecurityConfig {
 
-    @Bean
-    public DefaultMethodSecurityExpressionHandler expressionHandler() {
-        DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
-        expressionHandler.setPermissionEvaluator(new CustomPermissionEvaluator());
-        return expressionHandler;
-    }
+	@Bean
+	public DefaultMethodSecurityExpressionHandler expressionHandler() {
+		DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
+		expressionHandler.setPermissionEvaluator(new CustomPermissionEvaluator());
+		return expressionHandler;
+	}
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .formLogin(Customizer.withDefaults())
-                .authorizeHttpRequests((authorizeHttpRequests) ->
-                        authorizeHttpRequests
-                                //allow all actuator endpoints and all static content
-                                .requestMatchers(PathRequest.toStaticResources().atCommonLocations(), EndpointRequest.toAnyEndpoint()).permitAll()
-                                .requestMatchers("/server-info").permitAll()
-                                .anyRequest().authenticated())
-                .anonymous(AbstractHttpConfigurer::disable)
-        ;
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		http.formLogin(Customizer.withDefaults())
+			.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
+				// allow all actuator endpoints and all static content
+				.requestMatchers(PathRequest.toStaticResources().atCommonLocations(), EndpointRequest.toAnyEndpoint())
+				.permitAll()
+				.requestMatchers("/server-info")
+				.permitAll()
+				.anyRequest()
+				.authenticated())
+			.anonymous(AbstractHttpConfigurer::disable);
 
-        return http.build();
-    }
+		return http.build();
+	}
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails user = User.withDefaultPasswordEncoder()
-                .username("user")
-                .password("password")
-                .roles("USER")
-                .build();
-        UserDetails admin = User.withDefaultPasswordEncoder()
-                .username("admin")
-                .password("admin")
-                .roles("ADMIN", "USER")
-                .build();
-        return new InMemoryUserDetailsManager(user, admin);
-    }
+	@Bean
+	public UserDetailsService userDetailsService() {
+		UserDetails user = User.withDefaultPasswordEncoder()
+			.username("user")
+			.password("password")
+			.roles("USER")
+			.build();
+		UserDetails admin = User.withDefaultPasswordEncoder()
+			.username("admin")
+			.password("admin")
+			.roles("ADMIN", "USER")
+			.build();
+		return new InMemoryUserDetailsManager(user, admin);
+	}
 
-    //required to expose actuator/auditevents endpoint
-    @Bean
-    public AuditEventRepository auditEventRepository() {
-        return new InMemoryAuditEventRepository();
-    }
+	// required to expose actuator/auditevents endpoint
+	@Bean
+	public AuditEventRepository auditEventRepository() {
+		return new InMemoryAuditEventRepository();
+	}
 
 }
