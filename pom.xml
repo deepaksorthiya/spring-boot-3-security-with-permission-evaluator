@@ -113,10 +113,15 @@
                         </exclude>
                     </excludes>
                     <image>
-                        <name>deepaksorthiya/${project.artifactId}:${project.version}</name>
+                        <name>deepaksorthiya/${project.artifactId}:latest</name>
                         <publish>false</publish>
                         <createdDate>${maven.build.timestamp}</createdDate>
                         <builder>bellsoft/buildpacks.builder:musl</builder>
+                        <env>
+                            <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
+                            <BP_SPRING_AOT_ENABLED>true</BP_SPRING_AOT_ENABLED>
+                            <BP_JVM_VERSION>${java.version}</BP_JVM_VERSION>
+                        </env>
                     </image>
                 </configuration>
             </plugin>

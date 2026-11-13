@@ -1,6 +1,19 @@
-[![Java Maven Build Test](https://github.com/deepaksorthiya/spring-boot-3-security-with-permission-evaluator/actions/workflows/maven-build.yml/badge.svg)](https://github.com/deepaksorthiya/spring-boot-3-security-with-permission-evaluator/actions/workflows/maven-build.yml)
+<h1 style="text-align: center;">spring method based security example with custom PermissionEvaluator</h1>
 
-## spring method based security example with custom ```PermissionEvaluator```
+<p style="text-align: center;">
+  <a href="https://github.com/deepaksorthiya/spring-boot-3-security-with-permission-evaluator/actions/workflows/maven-jvm-non-native-build.yml">
+    <img src="https://img.shields.io/github/actions/workflow/status/deepaksorthiya/spring-boot-3-security-with-permission-evaluator/maven-jvm-non-native-build.yml?style=for-the-badge&label=JVM%20Maven%20Build" alt="JVM Maven Build"/>
+  </a>  
+  <a href="https://github.com/deepaksorthiya/spring-boot-3-security-with-permission-evaluator/actions/workflows/maven-graalvm-native-build.yml">
+    <img src="https://img.shields.io/github/actions/workflow/status/deepaksorthiya/spring-boot-3-security-with-permission-evaluator/maven-graalvm-native-build.yml?style=for-the-badge&label=GraalVM%20Maven%20Build" alt="GraalVM Maven Build"/>
+  </a>
+  <a href="https://hub.docker.com/r/deepaksorthiya/spring-boot-3-security-with-permission-evaluator">
+    <img src="https://img.shields.io/docker/pulls/deepaksorthiya/spring-boot-3-security-with-permission-evaluator?style=for-the-badge" alt="Docker"/>
+  </a>
+  <a href="https://spring.io/projects/spring-boot">
+    <img src="https://img.shields.io/badge/spring--boot-3.5.16-brightgreen?logo=springboot&style=for-the-badge" alt="Spring Boot"/>
+  </a>
+</p>
 
 # Getting Started
 
@@ -30,7 +43,7 @@ cd spring-boot-3-security-with-permission-evaluator
 ./mvnw spring-boot:run
 ```  
 
-### (Optional)Build Docker Image(Docker should be running)
+### (Optional)Build Docker Image (Docker should be running)
 
 ```bash
 ./mvnw clean spring-boot:build-image -DskipTests
