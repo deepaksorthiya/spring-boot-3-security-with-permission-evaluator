@@ -8,9 +8,9 @@
 
 ```
 Git: 2.51.0
-Spring Boot: 3.5.6
+Spring Boot: 3.5.16
 Java: 25
-Maven: 3.9+
+Maven: 3.10+
 Docker Desktop(Optional): Tested on 4.47.0
 ```
 
